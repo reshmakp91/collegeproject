@@ -1,0 +1,50 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .jumbotron {
+        background: url('{% static "images/admin.jpg" %}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 600px;
+    }
+</style>
+
+<div class="jumbotron text-center mb-0">
+    <div class="container text-center">
+        {% for message in messages %}
+        <div class="h5 alert alert-danger mx-auto" style=" max-width: 500px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+        <h1 class="display-4 font-weight-bold">Welcome, Admin!</h1>        
+    </div>
+    <div class="container my-5 pt-3">
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 h-100">
+                    <i class="fas fa-user-graduate fa-4x mb-2"></i>
+                    <h4>Student Management</h4>
+                    <p class="mb-0">Monitor admissions, update student records, and oversee academic progress for all enrolled learners.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 h-100">
+                    <i class="fas fa-book fa-4x mb-2"></i>
+                    <h4>Course Control</h4>
+                    <p class="mb-0">Design, modify, and organize academic programs to ensure curriculum quality and consistency.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 h-100">
+                    <i class="fas fa-chart-line fa-4x mb-2"></i>
+                    <h4>Performance Insights</h4>
+                    <p class="mb-0">Access key analytics and reporting tools to evaluate student and institutional performance at a glance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

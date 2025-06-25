@@ -1,0 +1,31 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mx-auto my-3">
+    <h1 class="text-center mt-2" style="color: maroon;">ALL TEACHERS</h1>
+    <hr class="bg-dark">
+    {% for message in messages %}
+        <div class="h5 text-success text-center mx-auto mt-2" style="max-width: 500px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="row">
+        {% for teacher in teachers %}
+            <div class="col-md-3 my-2 mb-4">
+                <div class="card shadow border-0" >
+                    <img class="card-img-top" src="{{ teacher.Image.url }}" style="height: 250px; object-fit: cover;">
+                    <div class="card-body mx-auto">
+                        <h5 class="card-title text-center text-dark">{{ teacher.user.first_name }} {{ teacher.user.last_name }}</h5>
+                        <p class="card-text text-center"><strong>{{ teacher.Course_name.course }}</strong></p>
+                        <div class="row mx-auto">
+                            <a href="{% url 'teacherdetails' teacher.id %}" class="btn btn-outline-danger">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

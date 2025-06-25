@@ -1,0 +1,39 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mx-auto my-4">
+    <h1 class="text-center mt-2 text-uppercase" style="color: maroon;">All Students</h1>
+    <hr class="bg-dark">
+    
+    {% for message in messages %}
+        <div class="h5 text-success text-center mx-auto mt-2" style="max-width: 500px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        {% for student in students %}
+            <div class="col-md-4 col-lg-3 my-3">
+                <div class="card shadow-lg border-0 rounded h-100" style="background-color: #fdf6f0;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="ml-2">
+                            <h4 class="card-title text-center text-primary font-weight-bold">{{ student.Name }}</h4>
+                            <hr>
+                            <p class="card-text mb-1"><i class="fa-solid fa-location-dot text-danger"></i><strong class="ml-2"> Address:</strong> {{ student.Address }}</p>
+                            <p class="card-text mb-1"><i class="fa-solid fa-cake-candles text-warning"></i><strong class="ml-2"> Age:</strong> {{ student.Age }}</p>
+                            <p class="card-text mb-1"><i class="fa-solid fa-calendar-days text-primary"></i><strong class="ml-2"> Joined:</strong> {{ student.Joining_Date }}</p>
+                            <p class="card-text"><i class="fa-solid fa-book-open text-info"></i><strong class="ml-2">Course:</strong> {{ student.Course_name.course }}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 d-flex justify-content-center">
+                        <a href="{% url 'editpage' student.id %}" class="btn btn-sm btn-outline-primary mx-1 px-3">Edit</a>
+                        <a href="{% url 'delete_student' student.id %}" onclick="return confirm('Do you really want to delete this student permanently?')" class="btn btn-sm btn-outline-danger mx-1 px-3">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

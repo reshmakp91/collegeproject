@@ -1,0 +1,73 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .student{
+        background: url('{% static "images/edit2.jpg" %}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;                
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+    }
+</style>
+
+
+<div class="student"></div>
+{% for message in messages %}
+        <div class="h5 alert alert-success mx-auto text-center" style=" max-width: 500px;">
+            {{ message }}
+        </div>
+        {% endfor %}
+<div class="container mx-auto mb-5 mt-4 rounded shadow" style="max-width: 550px; background-color: darkslategrey;">
+    
+    <form class="py-2 px-4" action="{% url 'edit_student' student.id %}" method="post">
+
+        {% csrf_token %}
+        <h1 class="text-center my-3 p-2 text-light">EDIT STUDENT DETAILS</h1>
+        <hr class="bg-light">
+        
+        <div class="form-group mt-2">
+            <label class="form-label h6 text-light">Student Name : </label>
+            <input class="form-control" type="text" name="student_name" value="{{ student.Name }}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label h6 text-light">Student Address : </label>
+            <textarea class="form-control" rows="3" name="student_address" required>{{ student.Address }}</textarea>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="form-label h6 text-light">Student Age : </label>
+                <input class="form-control" type="number" name="student_age" value="{{ student.Age }}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-label h6 text-light">Joining Date : </label>
+                <input class="form-control" type="date" name="student_jdate" value="{{ student.Joining_Date|date:'Y-m-d' }}" required>
+            </div>
+        </div>        
+        <div class="form-group">
+            <label class="form-label h6 text-light">Course : </label>
+            <select class="form-control" name="sel" required>
+                {% for c in courses %}
+                    {% if c.id == student.Course_name.id %}
+                        <option value="{{c.id}}" selected>{{c.course}}</option>
+                    {% else %}
+                        <option value="{{c.id}}">{{c.course}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-warning mx-auto my-2">SAVE CHANGES</button>
+        </div>
+    </form>
+    
+    
+</div>
+
+
+{% endblock %}

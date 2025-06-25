@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .teacher{
+        background: url('{% static "images/register.jpg" %}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;                
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+        filter: blur(2px);
+    }
+</style>
+
+<div class="teacher"></div>
+<div class="container mx-auto my-5 p-2 rounded shadow" style="max-width: 550px; background-color:rgb(1, 104, 135); color: white;">
+    <h1 class="text-center text-light p-2 mb-3">Register</h1>
+    <div class="container text-center mt-2">
+        {% for message in messages %}
+            <div class="text-warning h6 mx-auto" style="max-width: 400px;">
+                {{message}}
+            </div>
+        {% endfor %}
+    </div>
+    <hr class="bg-light">
+    <form class="p-2" id="regform" action="{% url 'register_user' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label class="form-label h6">First Name : </label>
+                <input type="text" class="form-control" name="fname" required>
+            </div>           
+            <div class="col-md-6">
+                <label class="form-label h6">Last Name : </label>
+                <input type="text" class="form-control" name="lname" required>
+            </div> 
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label class="form-label h6">Age :</label>
+                <input type="number" class="form-control" name="age" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label h6">Contact Number :</label>
+                <input type="text" class="form-control" name="mobile" id="mobile" required>
+                <small id="mobileError" class="text-warning"></small>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label h6 pt-1">Gender :</label>
+                <div class="row mt-2">
+                    <div class="form-check form-check-inline ml-3">
+                        <input class="form-check-input" type="radio" name="gender" value="Male"  required>
+                        <label class="form-check-label mr-2">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" value="Female" required>
+                        <label class="form-check-label">Female</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label h6">Address : </label>
+            <textarea type="text" class="form-control" rows="2" name="addr" required></textarea>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label class="form-label h6">District :  </label>
+                <input type="text" class="form-control" name="district" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label h6">State :  </label>
+                <input type="text" class="form-control" name="state" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label h6">Pincode :  </label>
+                <input type="number" class="form-control"  name="pincode" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label class="form-label h6">Email Address : </label>
+                <input type="email" class="form-control"  name="email" id="email" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label h6">Username : </label>
+                <input type="text" class="form-control"  name="username" id="username" required>
+                <small id="usernameError" class="text-warning"></small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+             <div class="col-md-6">
+                <label class="form-label h6">Password : </label>
+                <input type="password" class="form-control"  name="password" id="password" required>
+                <small id="passwordError" class="text-warning"></small>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label h6">Confirm Password : </label>
+                <input type="password" class="form-control"  name="cpassword" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-8">
+                <label class="form-label h6">Upload your Picture : </label>
+                <input type="file" accept="images/" class="form-control" name="picture" required>
+            </div>
+        </div>
+        <div class="form-group row">
+             <div class="col-md-6">
+                <label class="form-label h6">Course assigned  : </label>
+                <select class="form-control" name="sel" required>
+                    <option value="" selected disabled>Select Course</option>
+                    {% for c in courses %}
+                    <option value="{{c.id}}">{{c.course}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label h6">Experience in years : </label>
+                <input type="number" class="form-control"  name="exp" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <button type="submit" class="btn btn-warning col-md-3 mx-auto">Register</button>
+        </div>
+        <div class="row">
+            <p class="mx-auto col-md-6 text-center">Already a member? <a href="{% url 'loginpage' %}" class="text-light">Login here</a></p>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    username = document.getElementById("username");
+    password= document.getElementById("password");
+    mobileInput = document.getElementById("mobile");
+
+    mobileInput.addEventListener("input", validateMobileNumber);
+    username.addEventListener("input", validateUsername);
+    password.addEventListener("input", validatePassword);
+
+    function validateMobileNumber() {
+        mobilePattern = /^[6-9][0-9]{9}$/;
+        if (!mobilePattern.test(mobileInput.value)) {
+            mobileError.textContent = "Mobile number must be 10 digits and start with 6-9";
+            return;
+        }
+        else {
+            mobileError.textContent = ""; 
+        }
+    }
+
+    function validateUsername() {
+        usernameError = document.getElementById("usernameError");
+        if (username.value.length < 3) {
+            usernameError.textContent = "Username must be at least 3 characters.";
+        } 
+        else {
+            usernameError.textContent = "";
+        }
+    }
+
+    function validatePassword() {
+        if (password.value.length < 6) {
+            passwordError.textContent = "Password must be at least 6 characters.";
+        } 
+        else {
+            passwordError.textContent = "";
+        }
+    }
+
+</script>
+
+{% endblock %}

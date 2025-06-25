@@ -1,0 +1,47 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .course{
+        background: url('{% static "images/course.jpg" %}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;                
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+    }
+    
+</style>
+<div class="course"></div>
+
+{% for message in messages %}
+    <div class="h5 alert alert-success mx-auto text-center" style=" max-width: 500px;">
+        {{ message }}
+    </div>
+{% endfor %}
+<div class="container mx-auto my-5 p-3 rounded shadow" style="max-width: 550px; background-color: darkslategrey;">
+    <form class="p-2" action="{% url 'add_course'  %}" method="post">
+        {% csrf_token %}
+        <h1 class="text-center pt-3 mt-2 text-light">ADD COURSE</h1>
+        <hr class="bg-light">
+        
+        <div class="form-group mt-4">
+            <label class="form-label h6 text-light">Enter the course name : </label>
+            <input class="form-control" type="text" name="course_name" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label h6 text-light">Enter the course fee : </label>
+            <input class="form-control" type="number" name="course_fee" required>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-warning mx-auto my-3">ADD COURSE</button>
+        </div>
+    </form>
+    
+</div>
+
+{% endblock %}

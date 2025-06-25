@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="jumbotron text-center mb-0">
+    {% for message in messages %}
+        <div class="h5 text-danger mx-auto" style=" max-width: 500px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        
+        <div class="row align-items-center">
+            <div class="col-md-6 text-md-left text-center">
+                
+                <h1 class="display-3 font-weight-bold">Welcome to Orion Eduhub</h1>
+                <p class="lead mb-4">
+                    Unlock your potential with our comprehensive programs in Technology, Business, and Science. 
+                    Orion Eduhub is committed to delivering quality education for tomorrow’s leaders.
+                </p>
+                <a href="{% url 'loginpage' %}" class="btn btn-primary btn-lg mr-2 mb-4">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg mb-4">Register</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{% static 'images/images.jpeg' %}" class="img-fluid shadow rounded-circle" alt="Education Banner">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
